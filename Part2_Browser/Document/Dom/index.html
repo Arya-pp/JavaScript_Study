@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1 id="title">Welcome!</h1>
+  <button onclick="customize()">Click Me</button>
+
+  <script>
+    function customize() {
+      // DOM change page text
+      document.getElementById("title").textContent = "Hello from JavaScript!";
+
+      // BOM show browser info
+      alert("Browser Info: " + navigator.userAgent);
+
+      // BOM + DOM change background
+      document.body.style.background = "lightblue";
+
+      // BOM redirect after 3 seconds
+      setTimeout(() => {
+        location.href = "https://google.com";
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
