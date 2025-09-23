@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <style>
+    /* Basic table styling */
+    table {
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      border: 1px solid black;
+      padding: 3px;
+      text-align: center;
+    }
+
+    th {
+      font-weight: bold;
+      background-color: #E6E6E6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Container where the calendar will be inserted -->
+  <div id="calendar"></div>
+
+  <script>
+    // Function to create a calendar for a specific year and month
+    function createCalendar(elem, year, month) {
+      let mon = month - 1; // JS months are 0-11, so subtract 1
+      let d = new Date(year, mon); // create a date for the first day of the month
+
+      // Start building the table and header row
+      let table = '<table><tr><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th><th>SU</th></tr><tr>';
+
+      // Insert empty cells for days before the first day of the month
+      for (let i = 0; i < getDay(d); i++) {
+        table += '<td></td>';
+      }
+
+      // Fill in the table with the actual dates
+      while (d.getMonth() == mon) {
+        table += '<td>' + d.getDate() + '</td>'; // add the current date in a cell
+
+        // If the current day is Sunday, start a new row
+        if (getDay(d) % 7 == 6) {
+          table += '</tr><tr>';
+        }
+
+        d.setDate(d.getDate() + 1); // move to the next day
+      }
+
+      // Fill empty cells after the last day of the month to complete the last row
+      if (getDay(d) != 0) {
+        for (let i = getDay(d); i < 7; i++) {
+          table += '<td></td>';
+        }
+      }
+
+      // Close the last table row and the table
+      table += '</tr></table>';
+
+      // Insert the table into the specified container
+      elem.innerHTML = table;
+    }
+
+    // Helper function to get day number with Monday = 0, Sunday = 6
+    function getDay(date) {
+      let day = date.getDay(); // JS: Sunday = 0, Monday = 1, ..., Saturday = 6
+      if (day == 0) day = 7;   // make Sunday = 7
+      return day - 1;           // shift so Monday = 0
+    }
+
+    // Call the function to create the calendar for September 2012
+    const calendar = document.getElementById('calendar');
+    createCalendar(calendar, 2012, 9);
+  </script>
+
+</body>
+</html>
